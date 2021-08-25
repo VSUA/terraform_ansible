@@ -54,7 +54,7 @@ resource "aws_instance" "app_server" {
   count         = var.instances_count
   key_name      = aws_key_pair.generated_key.key_name
   user_data = base64encode(data.template_file.test.rendered)
-  subnet_id = var.aws_pub_subnet[0]
+  subnet_id = var.aws_pub_subnet.0.ip
   vpc_security_group_ids = [aws_security_group.http_sg.id]
   tags = {
     Name  = "Instance-${count.index + 1}"
