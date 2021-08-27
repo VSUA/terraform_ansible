@@ -42,7 +42,7 @@ module "petclinic" {
 }
 
 resource "local_file" "hosts" {
-  content     = module.petclinic.instances_public_ip[1]
+  content     = module.petclinic.instances_public_ip[0]
   filename = "/etc/ansible/hosts"
   file_permission = "400"
 
