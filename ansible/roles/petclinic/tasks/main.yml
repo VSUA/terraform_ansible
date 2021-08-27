@@ -16,7 +16,7 @@
     update: yes
 
 - name: build project
-  shell: 'mvn -f /home/ec2-user/git package'
+  shell: 'mvn -f /home/ec2-user/git package -Dspring_profiles_active=h2'
 
 - name: Upload config file
   copy:
