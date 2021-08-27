@@ -31,3 +31,11 @@ variable "aws_pub_subnet" {
 variable "aws_priv_subnet" {
   default = ""
 }
+
+variable "mysql_user" {
+  default = "petclinic"
+}
+
+variable "mysql_db_name" {
+  default = "petclinic"
+}

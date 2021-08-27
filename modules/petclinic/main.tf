@@ -41,10 +41,10 @@ resource "local_file" "private_key" {
 data "template_file" "test" {
   template = <<-EOF
    #!/bin/bash
-   echo "MYSQL_PASS=${var.key_name}" >> /etc/environment
-   echo "MYSQL_URL=/jdk1.8.0_172" >> /etc/environment
-   echo "MYSQL_USER=/jdk1.8.0_172" >> /etc/environment
-   echo "spring_profiles_active=/jdk1.8.0_172" >> /etc/environment
+   echo "MYSQL_PASS=${random_password.password.result}" >> /etc/environment
+   echo "MYSQL_URL=jdbc:mysql://${aws_db_instance.default.address}:3306/${var.mysql_db_name}?allowPublicKeyRetrieval=true&useSSL=false" >> /etc/environment
+   echo "MYSQL_USER=${var.mysql_user}" >> /etc/environment
+   echo "spring_profiles_active=mysql" >> /etc/environment
   EOF
 }
 
@@ -59,4 +59,27 @@ resource "aws_instance" "app_server" {
   tags = {
     Name  = "Instance-${count.index + 1}"
   }
+}
+
+resource "random_password" "password" {
+  length           = 16
+  special          = true
+  override_special = "_%@"
+}
+
+resource "aws_db_subnet_group" "db_group" {
+  name       = "education"
+  subnet_ids = var.aws_pub_subnet
+}
+
+resource "aws_db_instance" "default" {
+  allocated_storage    = 20
+  engine               = "mysql"
+  engine_version       = "8.0.23"
+  instance_class       = "db.t2.micro"
+  name                 = var.mysql_db_name
+  username             = var.mysql_user
+  password             = random_password.password.result
+  db_subnet_group_name   = aws_db_subnet_group.db_group.name
+  skip_final_snapshot  = true
 }
