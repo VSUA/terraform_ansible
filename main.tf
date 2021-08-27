@@ -40,3 +40,10 @@ module "petclinic" {
   ami = var.aws_ami
   key_name = var.aws_key_name
 }
+
+resource "local_file" "hosts" {
+  content     = module.petclinic.instances_public_ip[1]
+  filename = "/etc/ansible/hosts"
+  file_permission = "400"
+
+}
