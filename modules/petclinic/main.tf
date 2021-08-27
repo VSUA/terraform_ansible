@@ -69,7 +69,7 @@ resource "random_password" "password" {
 
 resource "aws_db_subnet_group" "db_group" {
   name       = "education"
-  subnet_ids = var.aws_pub_subnet
+  subnet_ids = var.aws_pub_subnet.*.id
 }
 
 resource "aws_db_instance" "default" {
