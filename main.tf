@@ -32,18 +32,24 @@ module "network" {
 //  service_name = var.service_name
 //}
 
-module "petclinic" {
-  source = "./modules/petclinic"
-  aws_vpc_id = module.network.aws_vpc_id
-  aws_priv_subnet = module.network.aws_priv_subnet
-  aws_pub_subnet = module.network.aws_pub_subnet
-  ami = var.aws_ami
-  key_name = var.aws_key_name
+module "dynamodb" {
+  source = "./modules/dynamodb"
+  region = var.aws_region
+  vpc_id = module.network.aws_vpc_id
 }
 
-resource "local_file" "hosts" {
-  content     = module.petclinic.instances_public_ip[0]
-  filename = "/etc/ansible/hosts"
-  file_permission = "400"
+//module "petclinic" {
+//  source = "./modules/petclinic"
+//  aws_vpc_id = module.network.aws_vpc_id
+//  aws_priv_subnet = module.network.aws_priv_subnet
+//  aws_pub_subnet = module.network.aws_pub_subnet
+//  ami = var.aws_ami
+//  key_name = var.aws_key_name
+//}
 
-}
+//resource "local_file" "hosts" {
+//  content     = module.petclinic.instances_public_ip[0]
+//  filename = "/etc/ansible/hosts"
+//  file_permission = "400"
+//
+//}

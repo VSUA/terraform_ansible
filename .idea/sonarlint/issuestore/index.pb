@@ -17,3 +17,17 @@ L
 modules/network/variables.tf,a\b\ab58cdc1c3e473103f757cc8f0312bea188dcb3e
 G
 modules/network/main.tf,6\5\652106650c24fba2711a614ee82275bf49f11b89
+@
+ansible/main.yml,1\7\17679acfe1b1a8665cb235012b11ba8be094ee05
+A
+petclinic.service,f\9\f9a0ead3f0c57f5c6636c340bd9a503b8d8db411
+N
+modules/petclinic/variables.tf,e\1\e1c34a76c4e6e08043991e2c7523a55c4ce4baab
+K
+modules/petclinic/output.tf,c\3\c3a0c40968531f470c2c4dc7fc86f873b7512719
+I
+modules/petclinic/main.tf,4\d\4d3787454d71d77d361e4a1fd9766c5d1328d685
+U
+%ansible/roles/petclinic/vars/main.yml,2\d\2d9ffbfc2149b3eb0ca159e08497718eb1cebe9b
+V
+&ansible/roles/petclinic/tasks/main.yml,2\5\25bfc35865183b6401209620dbd7de4979fd94bf
