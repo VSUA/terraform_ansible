@@ -36,6 +36,7 @@ module "dynamodb" {
   source = "./modules/dynamodb"
   region = var.aws_region
   vpc_id = module.network.aws_vpc_id
+  pub_rt_id = module.network.aws_pub_rt_id
 }
 
 //module "petclinic" {

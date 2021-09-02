@@ -31,3 +31,9 @@ U
 %ansible/roles/petclinic/vars/main.yml,2\d\2d9ffbfc2149b3eb0ca159e08497718eb1cebe9b
 V
 &ansible/roles/petclinic/tasks/main.yml,2\5\25bfc35865183b6401209620dbd7de4979fd94bf
+J
+modules/dynamodb/output.tf,1\7\177d2a665b0783df7d03e360b57f08e71ecec0d5
+M
+modules/dynamodb/variables.tf,e\3\e3f8cf5edc33401aaddbf70d4c505fcc1b9e688a
+H
+modules/dynamodb/main.tf,f\c\fc6bb0900eb7914de83e51917b69f43a8840229e

@@ -9,3 +9,11 @@ output "aws_priv_subnet" {
 output "aws_pub_subnet" {
   value = aws_subnet.nginx_pub_subnets.*
 }
+
+output "aws_priv_rt_id" {
+  value = aws_route_table.private.id
+}
+
+output "aws_pub_rt_id" {
+  value = aws_route_table.public.id
+}
