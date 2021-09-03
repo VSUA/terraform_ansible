@@ -2,12 +2,21 @@ resource "aws_security_group" "http_sg" {
   name        = "http_sg"
   vpc_id      = var.aws_vpc_id
 
-  ingress {
-    from_port        = 80
-    to_port          = 80
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
-  }
+  ingress = [
+    {
+      from_port        = 5000
+      to_port          = 5000
+      protocol         = "tcp"
+      cidr_blocks      = ["0.0.0.0/0"]
+    },
+
+    {
+      from_port        = 22
+      to_port          = 22
+      protocol         = "tcp"
+      cidr_blocks      = ["0.0.0.0/0"]
+    }
+  ]
 
   egress {
     from_port        = 0
@@ -38,13 +47,23 @@ resource "local_file" "private_key" {
   file_permission = "400"
 }
 
+//data "template_file" "test" {
+//  template = <<-EOF
+//   #!/bin/bash
+//   echo "MYSQL_PASS=${random_password.password.result}" >> /etc/environment
+//   echo "MYSQL_URL=jdbc:mysql://${aws_db_instance.default.address}:3306/${var.mysql_db_name}?allowPublicKeyRetrieval=true&useSSL=false" >> /etc/environment
+//   echo "MYSQL_USER=${var.mysql_user}" >> /etc/environment
+//   echo "spring_profiles_active=mysql" >> /etc/environment
+//  EOF
+//}
+
+
 data "template_file" "test" {
   template = <<-EOF
    #!/bin/bash
-   echo "MYSQL_PASS=${random_password.password.result}" >> /etc/environment
-   echo "MYSQL_URL=jdbc:mysql://${aws_db_instance.default.address}:3306/${var.mysql_db_name}?allowPublicKeyRetrieval=true&useSSL=false" >> /etc/environment
-   echo "MYSQL_USER=${var.mysql_user}" >> /etc/environment
-   echo "spring_profiles_active=mysql" >> /etc/environment
+   echo "ACCESS_KEY=${var.aws_access_key}" >> /etc/environment
+   echo "SECRET_KEY=${var.aws_secret_key}" >> /etc/environment
+   echo "REGION_NAME=${var.region}" >> /etc/environment
   EOF
 }
 
@@ -61,25 +80,25 @@ resource "aws_instance" "app_server" {
   }
 }
 
-resource "random_password" "password" {
-  length           = 16
-  special          = true
-  override_special = "_%@"
-}
-
-resource "aws_db_subnet_group" "db_group" {
-  name       = "education"
-  subnet_ids = var.aws_pub_subnet.*.id
-}
-
-resource "aws_db_instance" "default" {
-  allocated_storage    = 20
-  engine               = "mysql"
-  engine_version       = "8.0.23"
-  instance_class       = "db.t2.micro"
-  name                 = var.mysql_db_name
-  username             = var.mysql_user
-  password             = random_password.password.result
-  db_subnet_group_name   = aws_db_subnet_group.db_group.name
-  skip_final_snapshot  = true
-}
+//resource "random_password" "password" {
+//  length           = 16
+//  special          = true
+//  override_special = "_%@"
+//}
+//
+//resource "aws_db_subnet_group" "db_group" {
+//  name       = "education"
+//  subnet_ids = var.aws_pub_subnet.*.id
+//}
+//
+//resource "aws_db_instance" "default" {
+//  allocated_storage    = 20
+//  engine               = "mysql"
+//  engine_version       = "8.0.23"
+//  instance_class       = "db.t2.micro"
+//  name                 = var.mysql_db_name
+//  username             = var.mysql_user
+//  password             = random_password.password.result
+//  db_subnet_group_name   = aws_db_subnet_group.db_group.name
+//  skip_final_snapshot  = true
+//}
